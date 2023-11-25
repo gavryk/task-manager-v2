@@ -1,7 +1,7 @@
 const App: React.FC = () => {
 	return (
 		<>
-			<h1>New Project</h1>
+			<h1>New Project Tasks Manager</h1>
 		</>
 	);
 };
