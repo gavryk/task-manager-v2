@@ -1,0 +1,54 @@
+@import './abstracts/';
+
+:root {
+	//colors
+	@each $name, $val in $baseColors {
+		--base--color--#{"" + $name}: #{$val};
+	}
+
+	//spaces
+	@for $i from 1 through $spaces-count {
+		--base--spaces--#{$i}: #{$space-factor * $i}px;
+	}
+
+	//Shadows
+	@each $name, $val in $shadows {
+		--base--box-shadow-#{"" + $name}: #{$val};
+	}
+
+	//border radius
+	@each $name, $val in $borderRadius {
+		--base--border-radius-#{"" + $name}: #{$val};
+	}
+
+	//font sizes
+	--base--font--size-sm: 12px;
+	--base--font--size: 14px;
+	--base--font--size-md: 16px;
+	--base--font--size-lg: 18px;
+	--base--font--size--h1: 48px;
+	--base--font--size--h1-md: 40px;
+	--base--font--size--h1-sm: 34px;
+	--base--font--size--h2: 34px;
+	--base--font--size--h2-md: 32px;
+	--base--font--size--h2-sm: 30px;
+	--base--font--size--h3: 32px;
+	--base--font--size--h3-md: 30px;
+	--base--font--size--h3-sm: 28px;
+	--base--font--size--h4: 28px;
+	--base--font--size--h4-md: 26px;
+	--base--font--size--h4-sm: 24px;
+	--base--font--size--h5: 20px;
+
+	//sizes
+	--base--logo-size-sm: 100px;
+	--base--logo-size-md: 150px;
+	--base--logo-size-lg: 220px;
+}
+
+@mixin container($width) {
+	max-width: #{$width};
+	width: 94%;
+	margin: 0 auto;
+	position: relative;
+}
