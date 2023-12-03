@@ -7,10 +7,13 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: import.meta.env.VITE_BASE_URL,
 		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 		prepareHeaders: (headers) => {
-			const token = parseCookies();
-			if (token) {
-				headers.set('Authorization', `Bearer ${token}`);
+			const { access_token } = parseCookies();
+			if (access_token) {
+				headers.set('Authorization', `Bearer ${access_token}`);
 			}
 			return headers;
 		},

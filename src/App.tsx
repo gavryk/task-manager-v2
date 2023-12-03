@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { useLoginUserMutation } from './store/api/auth.api';
+import { useGetUsersQuery, useLoginUserMutation } from './store/api/auth.api';
 
 const App: React.FC = () => {
 	const [loginUser, { data: userData, isLoading: loginLoading }] = useLoginUserMutation();
+	const { data: usersData } = useGetUsersQuery();
 
 	const logIn = async () => {
 		await loginUser({
