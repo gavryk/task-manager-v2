@@ -1,7 +1,12 @@
+import { IAuthTypes } from '@/common';
 import { api } from './api';
 
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
+		getAuthUser: builder.query<IAuthTypes, void>({
+			query: () => `/users/profile/me`,
+			providesTags: ['Auth'],
+		}),
 		loginUser: builder.mutation({
 			query: (user) => ({
 				body: user,
@@ -14,4 +19,4 @@ export const authApi = api.injectEndpoints({
 	}),
 });
 
-export const { useLoginUserMutation } = authApi;
+export const { useLoginUserMutation, useGetAuthUserQuery } = authApi;
