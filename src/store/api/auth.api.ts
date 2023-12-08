@@ -2,9 +2,6 @@ import { api } from './api';
 
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getUsers: builder.query<any, void>({
-			query: () => '/users',
-		}),
 		loginUser: builder.mutation({
 			query: (user) => ({
 				body: user,
@@ -17,4 +14,4 @@ export const authApi = api.injectEndpoints({
 	}),
 });
 
-export const { useLoginUserMutation, useGetUsersQuery } = authApi;
+export const { useLoginUserMutation } = authApi;
