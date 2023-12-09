@@ -6,6 +6,8 @@ import { MainLayout } from './layout';
 import { PrivateRoute } from './features';
 import { useGetAuthUserQuery } from './store/api/auth.api';
 import { setAuth } from './store/slices/auth/slice';
+import { Home } from './pages/Home';
+import { Login } from './pages/Login';
 
 const App: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -23,9 +25,9 @@ const App: React.FC = () => {
 		<Routes location={location} key={location.pathname}>
 			<Route path="/" element={<MainLayout />}>
 				<Route element={<PrivateRoute />}>
-					<Route path="" element={<h1>Hello</h1>} />
+					<Route path="" element={<Home />} />
 				</Route>
-				<Route path="/login" element={<h1>Login</h1>} />
+				<Route path="/login" element={<Login />} />
 			</Route>
 		</Routes>
 	);
