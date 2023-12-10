@@ -1,0 +1,62 @@
+.loginForm {
+	position: relative;
+	max-width: 500px;
+	min-height: 250px;
+	margin: 0 auto;
+	background-color: var(--base--color--second-main-bg);
+	padding: var(--base--spaces--8) var(--base--spaces--6);
+	border-radius: var(--base--border-radius-2);
+	box-shadow: var(--base--box-shadow-1);
+	form {
+		margin-top: var(--base--spaces--6);
+	}
+}
+
+.fieldsWrapper {
+	display: grid;
+	column-gap: 20px;
+	&.cols1 {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	&.cols2 {
+		grid-template-columns: repeat(2, 1fr);
+		@media screen and (max-width: 576px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+	&.cols3 {
+		grid-template-columns: repeat(3, 1fr);
+		@media screen and (max-width: 1024px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media screen and (max-width: 576px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+	&.cols4 {
+		grid-template-columns: repeat(4, 1fr);
+		@media screen and (max-width: 1024px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		@media screen and (max-width: 768px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media screen and (max-width: 576px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+}
+
+.notice {
+	display: block;
+	margin: 15px 0 0;
+	a {
+		color: var(--base--color--main);
+	}
+}
+
+.errorDB {
+	display: block;
+	margin: 15px 0 0;
+	color: var(--base--color--red);
+}

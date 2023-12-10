@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { RootState } from '@/store/store';
-import { IAuthTypes } from '@/common';
+import { useAppDispatch } from '@/store/store';
+import { useGetAuthUserQuery } from '@/store/api/auth.api';
+import { setAuth } from '@/store/slices/auth/slice';
 
 export const PrivateRoute: React.FC = () => {
-	const [userState, setUserState] = useState<IAuthTypes>({} as IAuthTypes);
-	const user = useSelector((state: RootState) => state.auth.user);
+	const dispatch = useAppDispatch();
 	const location = useLocation();
+	const { isLoading: authLoading, data: authData } = useGetAuthUserQuery();
 
 	useEffect(() => {
-		setUserState(user as IAuthTypes);
-	}, [user]);
+		if (!authLoading && authData) dispatch(setAuth({ ...authData }));
+	}, [dispatch, authLoading, authData]);
 
-	return userState ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />;
+	if (authLoading) return <h1>Loading...</h1>;
+
+	return authData ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />;
 };
