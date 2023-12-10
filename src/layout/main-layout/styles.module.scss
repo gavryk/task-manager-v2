@@ -1,0 +1,14 @@
+.layout {
+	position: relative;
+	min-height: 100vh;
+	&.auth {
+		background: linear-gradient(
+			45deg,
+			var(--base--color--main),
+			var(--base--color--main-3),
+			var(--base--color--main-2)
+		);
+		display: grid;
+		align-items: center;
+	}
+}

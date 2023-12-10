@@ -7,10 +7,11 @@ import { Login } from './pages/Login';
 
 const App: React.FC = () => {
 	const location = useLocation();
+	const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
 	return (
 		<Routes location={location} key={location.pathname}>
-			<Route path="/" element={<MainLayout />}>
+			<Route path="/" element={<MainLayout isAuth={isAuthPage} />}>
 				<Route element={<PrivateRoute />}>
 					<Route path="" element={<Home />} />
 				</Route>

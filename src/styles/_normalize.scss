@@ -26,8 +26,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	color: var(--base--color--text);
-	background-color: var(--base--color--main-bg);
-	transition: all 0.2s ease-in-out;
+	background: var(--base--color--main-bg);
 }
 
 [data-theme='dark'] {

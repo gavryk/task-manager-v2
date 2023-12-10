@@ -56,7 +56,7 @@ export const LoginForm: React.FC = () => {
 					/>
 				</div>
 				{!loginLoading ? (
-					<UIButton fluid type="submit" color="green">
+					<UIButton fluid type="submit" color="main">
 						Login
 					</UIButton>
 				) : (
