@@ -4,6 +4,7 @@ import { MainLayout } from './layout';
 import { PrivateRoute } from './features';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
 const App: React.FC = () => {
 	const location = useLocation();
@@ -16,6 +17,7 @@ const App: React.FC = () => {
 					<Route path="" element={<Home />} />
 				</Route>
 				<Route path="/login" element={<Login />} />
+				<Route path="/register" element={<Register />} />
 			</Route>
 		</Routes>
 	);

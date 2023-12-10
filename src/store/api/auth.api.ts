@@ -1,4 +1,4 @@
-import { IAuthTypes } from '@/common';
+import { IAuthTypes, IRegisterTypes } from '@/common';
 import { api } from './api';
 
 export const authApi = api.injectEndpoints({
@@ -16,7 +16,14 @@ export const authApi = api.injectEndpoints({
 			}),
 			invalidatesTags: () => ['Auth'],
 		}),
+		registerUser: builder.mutation<void, IRegisterTypes>({
+			query: (user) => ({
+				body: user,
+				url: `/auth/register`,
+				method: 'POST',
+			}),
+		}),
 	}),
 });
 
-export const { useLoginUserMutation, useGetAuthUserQuery } = authApi;
+export const { useLoginUserMutation, useGetAuthUserQuery, useRegisterUserMutation } = authApi;
