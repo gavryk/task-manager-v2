@@ -20,7 +20,7 @@ export const RegisterForm: React.FC = () => {
 	} = useForm<IRegisterTypes>();
 
 	const onSubmit = async (data: IRegisterTypes) => {
-		await registerUser(data)
+		await registerUser({ ...data, role: isSwitched ? 'ADMIN' : 'USER' })
 			.unwrap()
 			.then(() => {
 				reset({
@@ -62,16 +62,16 @@ export const RegisterForm: React.FC = () => {
 					type="checkbox"
 					id="userRoleField"
 					onSwitchChange={() => setIsSwitched(!isSwitched)}
-					label={!isSwitched ? 'Admin' : 'User'}
+					label={isSwitched ? 'Admin' : 'User'}
 					checked={isSwitched}
-					{...register('role', { required: 'Please enter your role.' })}
+					{...register('role')}
 				/>
 				{isSwitched && (
 					<UIInput
 						type="text"
 						id="userAdminKeyField"
 						placeholder="Admin Key"
-						{...register('adminKey', { required: 'Please enter your email.' })}
+						{...register('adminKey')}
 						error={errors.adminKey && errors.adminKey.message}
 					/>
 				)}

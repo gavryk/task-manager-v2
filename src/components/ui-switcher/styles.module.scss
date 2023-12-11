@@ -9,8 +9,8 @@
 	position: relative;
 	display: flex;
 	align-items: center;
-	border: 1px solid var(--base--color--grey);
-	background-color: var(--base--color--grey);
+	border: 1px solid var(--base--color--white);
+	background-color: var(--base--color--white);
 	width: 40px;
 	height: 20px;
 	border-radius: 50px;
@@ -28,7 +28,6 @@
 	}
 	&.active {
 		border: 1px solid var(--base--color--orange);
-		// justify-content: flex-end;
 		.switchToggle {
 			background-color: var(--base--color--orange);
 			transform: translateX(110%);
