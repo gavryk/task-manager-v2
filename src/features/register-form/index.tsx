@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UIButton, UIInput, UITypography } from '../../components';
+import { UIButton, UIInput, UISwitcher, UITypography } from '../../components';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.scss';
 import { IRegisterTypes } from '@/common';
@@ -10,6 +10,7 @@ export const RegisterForm: React.FC = () => {
 	const navigate = useNavigate();
 	const [registerUser, { isLoading: registerLoading }] = useRegisterUserMutation();
 	const [errorSubmit, setErrorSubmit] = useState<string | null>(null);
+	const [isSwitched, setIsSwitched] = useState(false);
 
 	const {
 		register,
@@ -45,25 +46,35 @@ export const RegisterForm: React.FC = () => {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<UIInput
 					type="text"
-					id="userFirstNameField"
+					id="userNameField"
 					placeholder="Name"
 					{...register('name', { required: 'Please enter your first name.' })}
 					error={errors.name && errors.name.message}
 				/>
 				<UIInput
 					type="text"
-					id="userLastNameField"
+					id="userEmailField"
 					placeholder="Email"
 					{...register('email', { required: 'Please enter your email.' })}
 					error={errors.email && errors.email.message}
 				/>
-				<UIInput
-					type="text"
-					id="userLocationField"
-					placeholder="Role"
+				<UISwitcher
+					type="checkbox"
+					id="userRoleField"
+					onSwitchChange={() => setIsSwitched(!isSwitched)}
+					label={!isSwitched ? 'Admin' : 'User'}
+					checked={isSwitched}
 					{...register('role', { required: 'Please enter your role.' })}
-					error={errors.role && errors.role.message}
 				/>
+				{isSwitched && (
+					<UIInput
+						type="text"
+						id="userAdminKeyField"
+						placeholder="Admin Key"
+						{...register('adminKey', { required: 'Please enter your email.' })}
+						error={errors.adminKey && errors.adminKey.message}
+					/>
+				)}
 				<UIInput
 					type="password"
 					id="passwordField"

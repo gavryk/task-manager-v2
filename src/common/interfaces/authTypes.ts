@@ -3,6 +3,7 @@ export interface IRegisterTypes {
 	email: string;
 	avatarPath: string;
 	role: string;
+	adminKey?: string;
 	tasks: any;
 	password: string;
 }
