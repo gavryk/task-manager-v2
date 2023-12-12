@@ -48,11 +48,11 @@ export const RegisterForm: React.FC = () => {
 					type="text"
 					id="userNameField"
 					placeholder="Name"
-					{...register('name', { required: 'Please enter your first name.' })}
+					{...register('name', { required: 'Please enter your name.' })}
 					error={errors.name && errors.name.message}
 				/>
 				<UIInput
-					type="text"
+					type="email"
 					id="userEmailField"
 					placeholder="Email"
 					{...register('email', { required: 'Please enter your email.' })}
