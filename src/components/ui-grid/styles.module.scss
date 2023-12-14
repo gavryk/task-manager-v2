@@ -18,6 +18,10 @@
 	grid-template-columns: repeat(1, 1fr);
 }
 
+.fullHeight {
+	min-height: 100%;
+}
+
 .gridColumns2 {
 	grid-template-columns: repeat(2, 1fr);
 	&.centerBigSm {

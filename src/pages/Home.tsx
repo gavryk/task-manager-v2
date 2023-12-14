@@ -10,7 +10,7 @@ export const Home: React.FC = () => {
 	return (
 		<UIGrid columns={5} gridGap={5}>
 			{userData?.map((user) => (
-				<h3>{user.name}</h3>
+				<h3 key={user?.id}>{user.name}</h3>
 			))}
 		</UIGrid>
 	);

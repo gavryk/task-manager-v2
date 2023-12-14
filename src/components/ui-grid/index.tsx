@@ -8,6 +8,7 @@ interface GridProps {
 	gridGap: number;
 	centerBig?: 'sm' | 'md' | 'lg';
 	alignItem?: 'flex-start' | 'flex-end' | 'center' | 'stretch';
+	fullHeight?: boolean;
 }
 
 export const UIGrid = ({
@@ -16,6 +17,7 @@ export const UIGrid = ({
 	gridGap,
 	centerBig,
 	alignItem = 'stretch',
+	fullHeight,
 }: GridProps) => {
 	const gridWrapperClasses = useMemo(() => {
 		return clsx(styles.gridWrapper, {
@@ -27,6 +29,7 @@ export const UIGrid = ({
 			[styles.flxStart]: alignItem === 'flex-start',
 			[styles.flxEnd]: alignItem === 'flex-end',
 			[styles.flxCenter]: alignItem === 'center',
+			[styles.fullHeight]: fullHeight === true,
 		});
 	}, [columns, gridGap]);
 
