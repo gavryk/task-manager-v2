@@ -22,6 +22,7 @@ export const authApi = api.injectEndpoints({
 				url: `/auth/register`,
 				method: 'POST',
 			}),
+			invalidatesTags: () => ['Users'],
 		}),
 	}),
 });

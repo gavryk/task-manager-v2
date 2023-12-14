@@ -9,7 +9,7 @@ type LayoutType = {
 export const MainLayout: React.FC<LayoutType> = ({ isAuth }) => {
 	return (
 		<div className={clsx(styles.layout, { [styles.auth]: isAuth })}>
-			<div className={clsx('container', 'space')}>
+			<div className={clsx('container-lg', 'space')}>
 				<Outlet />
 			</div>
 		</div>

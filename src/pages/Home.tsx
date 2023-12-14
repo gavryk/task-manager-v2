@@ -1,5 +1,17 @@
+import { UIGrid, UILoader } from '@/components';
+import { useGetUsersQuery } from '@/store/api/users.api';
 import React from 'react';
 
 export const Home: React.FC = () => {
-	return <div>Home</div>;
+	const { data: userData, isLoading: userLoading } = useGetUsersQuery();
+
+	if (userLoading) return <UILoader />;
+
+	return (
+		<UIGrid columns={5} gridGap={5}>
+			{userData?.map((user) => (
+				<h3>{user.name}</h3>
+			))}
+		</UIGrid>
+	);
 };
