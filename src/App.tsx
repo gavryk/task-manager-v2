@@ -5,10 +5,14 @@ import { PrivateRoute } from './features';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { Reset } from './pages/Reset';
 
 const App: React.FC = () => {
 	const location = useLocation();
-	const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+	const isAuthPage =
+		location.pathname === '/login' ||
+		location.pathname === '/register' ||
+		location.pathname === '/password-reset';
 
 	return (
 		<Routes location={location} key={location.pathname}>
@@ -18,6 +22,7 @@ const App: React.FC = () => {
 				</Route>
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
+				<Route path="/password-reset" element={<Reset />} />
 			</Route>
 		</Routes>
 	);

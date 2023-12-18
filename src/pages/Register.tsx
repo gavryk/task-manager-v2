@@ -1,4 +1,4 @@
-import { RegisterForm } from '@/features/register-form';
+import { RegisterForm } from '@/features';
 
 export const Register: React.FC = () => {
 	return (

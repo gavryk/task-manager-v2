@@ -1,34 +1,30 @@
-import { useLoginUserMutation } from '@/store/api/auth.api';
-import { useAppDispatch } from '@/store/store';
+import { useResetPassordMutation } from '@/store/api/auth.api';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { UIButton, UIInput, UILoader, UITypography } from '@/components';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginTypes } from '@/common';
-import { setAuth } from '@/store/slices/auth/slice';
+import { IResetPassTypes } from '@/common';
 
-export const LoginForm: React.FC = () => {
-	const dispatch = useAppDispatch();
+export const ResetForm: React.FC = () => {
 	const navigate = useNavigate();
 	const [errorReq, setErrorReq] = useState<string | null>(null);
-	const [loginUser, { isLoading: loginLoading }] = useLoginUserMutation();
+	const [resetPassword, { isLoading: resetLoading }] = useResetPassordMutation();
 
 	const {
 		register,
 		reset,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ILoginTypes>();
+	} = useForm<IResetPassTypes>();
 
-	const onSubmit: SubmitHandler<ILoginTypes> = async (data) => {
-		await loginUser(data)
+	const onSubmit: SubmitHandler<IResetPassTypes> = async (data) => {
+		await resetPassword(data)
 			.unwrap()
 			.then((data) => {
-				reset({ email: '', password: '' });
-				dispatch(setAuth(data));
-				navigate('/');
+				reset({ email: '' });
+				navigate('/login');
 			})
 			.catch((err) => setErrorReq(err.data.message));
 	};
@@ -36,7 +32,7 @@ export const LoginForm: React.FC = () => {
 	return (
 		<div className={styles.loginForm}>
 			<UITypography variant="h3" fontWeight="bold" bottomSpace="sm" textAlign="center">
-				Login
+				Reset Password
 			</UITypography>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className={clsx(styles.fieldsWrapper, styles.cols1)}>
@@ -47,17 +43,10 @@ export const LoginForm: React.FC = () => {
 						{...register('email', { required: 'Please enter your email.' })}
 						error={errors.email && errors.email.message}
 					/>
-					<UIInput
-						type="password"
-						id="passwordField"
-						placeholder="Password"
-						{...register('password', { required: 'Please enter your password.' })}
-						error={errors.password && errors.password.message}
-					/>
 				</div>
-				{!loginLoading ? (
+				{!resetLoading ? (
 					<UIButton fluid type="submit" color="main">
-						Login
+						Send
 					</UIButton>
 				) : (
 					<UILoader />
@@ -65,9 +54,6 @@ export const LoginForm: React.FC = () => {
 				{errorReq && <span className={styles.errorDB}>{errorReq as React.ReactNode}</span>}
 				<span className={styles.notice}>
 					Dont have an account? <Link to="/register">Register.</Link>
-				</span>
-				<span className={styles.notice}>
-					<Link to="/password-reset">I forgot my password.</Link>
 				</span>
 			</form>
 		</div>

@@ -1,4 +1,4 @@
-import { LoginForm } from '@/features/login-form';
+import { LoginForm } from '@/features';
 import React from 'react';
 
 export const Login: React.FC = () => {

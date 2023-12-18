@@ -19,3 +19,5 @@ export interface IAuthTypes extends Omit<IRegisterTypes, 'password'> {
 export interface IAuthSliceTypes {
 	user: null | IAuthTypes;
 }
+
+export interface IResetPassTypes extends Omit<ILoginTypes, 'password'> {}

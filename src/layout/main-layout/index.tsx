@@ -12,10 +12,16 @@ export const MainLayout: React.FC<LayoutType> = ({ isAuth }) => {
 	return (
 		<div className={clsx(styles.layout, { [styles.auth]: isAuth })}>
 			<div className={clsx(styles.fullHeight, 'container-xl', 'space')}>
-				<UIGrid columns={2} centerBig="lg" gridGap={12} alignItem="stretch" fullHeight={true}>
-					<Sidebar />
-					<Outlet />
-				</UIGrid>
+				{!isAuth ? (
+					<UIGrid columns={2} centerBig="lg" gridGap={12} alignItem="stretch" fullHeight={true}>
+						<Sidebar />
+						<Outlet />
+					</UIGrid>
+				) : (
+					<UIGrid columns={1} gridGap={12} alignItem="center" fullHeight={true}>
+						<Outlet />
+					</UIGrid>
+				)}
 			</div>
 		</div>
 	);
