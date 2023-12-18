@@ -30,7 +30,7 @@ export const ResetForm: React.FC = () => {
 	};
 
 	return (
-		<div className={styles.loginForm}>
+		<div className={styles.resetForm}>
 			<UITypography variant="h3" fontWeight="bold" bottomSpace="sm" textAlign="center">
 				Reset Password
 			</UITypography>
