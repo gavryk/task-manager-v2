@@ -7,3 +7,4 @@ export * from './ui-loader';
 export * from './ui-typography';
 export * from './ui-switcher';
 export * from './ui-burger';
+export * from './ui-user-card';

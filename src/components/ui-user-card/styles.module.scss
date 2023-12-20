@@ -1,0 +1,22 @@
+.root {
+	background-color: var(--base--color--white);
+	min-height: 275px;
+	border-radius: var(--base--border-radius-3);
+}
+
+.userCardTop {
+	padding: var(--base--spaces--4) var(--base--spaces--3);
+	border-bottom: 1px solid var(--base--color--light-grey-2);
+	.name {
+		span {
+			font-size: var(--base--font--size-md);
+		}
+	}
+}
+
+.userTasks {
+	.task {
+		padding: var(--base--spaces--2);
+		border-bottom: 1px solid var(--base--color--light-grey-2);
+	}
+}
