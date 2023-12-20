@@ -5,4 +5,5 @@ export interface SettingsSliceTypes {
 export type INavigateItem = {
 	link: string;
 	title: string;
+	icon: any;
 };

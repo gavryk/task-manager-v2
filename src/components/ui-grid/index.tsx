@@ -6,7 +6,7 @@ interface GridProps {
 	children: React.ReactNode;
 	columns: number;
 	gridGap: number;
-	centerBig?: 'sm' | 'md' | 'lg';
+	centerBig?: 'sm' | 'md' | 'lg' | 'auto';
 	alignItem?: 'flex-start' | 'flex-end' | 'center' | 'stretch';
 	fullHeight?: boolean;
 }
@@ -26,6 +26,7 @@ export const UIGrid = ({
 			[styles.centerBigSm]: centerBig === 'sm',
 			[styles.centerBigMd]: centerBig === 'md',
 			[styles.centerBigLg]: centerBig === 'lg',
+			[styles.centerBigAuto]: centerBig === 'auto',
 			[styles.flxStart]: alignItem === 'flex-start',
 			[styles.flxEnd]: alignItem === 'flex-end',
 			[styles.flxCenter]: alignItem === 'center',

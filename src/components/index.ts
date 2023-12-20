@@ -6,3 +6,4 @@ export * from './ui-label';
 export * from './ui-loader';
 export * from './ui-typography';
 export * from './ui-switcher';
+export * from './ui-burger';

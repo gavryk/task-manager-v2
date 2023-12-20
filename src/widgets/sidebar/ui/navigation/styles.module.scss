@@ -6,8 +6,11 @@
 	.navItem {
 		a {
 			background-color: var(--base--color--lighgrey);
-			display: block;
-			padding: var(--base--spaces--3) 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 15px;
+			padding: var(--base--spaces--3) var(--base--spaces--4);
 			text-align: center;
 			transition: all 0.2s ease-in-out;
 			&.active,

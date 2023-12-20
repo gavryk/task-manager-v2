@@ -43,13 +43,17 @@
 		}
 	}
 	&.centerBigLg {
-		grid-template-columns: 20% 1fr;
+		grid-template-columns: 15% 1fr;
 		@media screen and (max-width: 1480px) {
-			grid-template-columns: 35% 1fr;
+			grid-template-columns: 25% 1fr;
 		}
 		@media screen and (max-width: 768px) {
 			grid-template-columns: repeat(1, 1fr);
 		}
+	}
+
+	&.centerBigAuto {
+		grid-template-columns: auto 1fr;
 	}
 }
 

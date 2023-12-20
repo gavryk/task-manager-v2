@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: SettingsSliceTypes = {
 	navigation: [
-		{ link: '#', title: 'All Tasks' },
-		{ link: '#', title: 'In Progress' },
-		{ link: '#', title: 'Complete' },
-		{ link: '#', title: 'Settings' },
+		{ link: '#', title: 'All Tasks', icon: 'FiGrid' },
+		{ link: '#', title: 'In Progress', icon: 'FiFastForward' },
+		{ link: '#', title: 'Complete', icon: 'FiCheck' },
+		{ link: '#', title: 'Settings', icon: 'FiSettings' },
 	],
 };
 
