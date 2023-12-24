@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { AuthPanel, Navigation } from './ui';
 import { UIBurger } from '@/components';
+import { motion } from 'framer-motion';
 
 export const Sidebar: React.FC = () => {
 	const user = useSelector((state: RootState) => state.auth.user);

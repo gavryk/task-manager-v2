@@ -1,8 +1,9 @@
 import { INavigateItem } from '@/common';
 import React from 'react';
 import styles from './styles.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { UIIcon } from '@/components';
+import { motion } from 'framer-motion';
 
 interface NavigateTypes {
 	links: INavigateItem[];
