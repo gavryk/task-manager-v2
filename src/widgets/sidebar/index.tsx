@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import { AuthPanel, Navigation } from './ui';
-import { UIBurger } from '@/components';
-import { motion } from 'framer-motion';
+import { UIBurger, UIIcon } from '@/components';
 
 export const Sidebar: React.FC = () => {
 	const user = useSelector((state: RootState) => state.auth.user);
@@ -20,8 +19,13 @@ export const Sidebar: React.FC = () => {
 			<div className={styles.burgerIcon}>
 				<UIBurger mobileMenuActive={sidebarStatus} handlerClick={handlerClick} />
 			</div>
-			{sidebarStatus && <AuthPanel user={user} />}
-			<Navigation links={links} minimal={!sidebarStatus} />
+			<div className={styles.main}>
+				{sidebarStatus && <AuthPanel user={user} />}
+				<Navigation links={links} minimal={!sidebarStatus} />
+			</div>
+			<div className={styles.logoutButton}>
+				<UIIcon name="FiLogIn" size={24} />
+			</div>
 		</div>
 	);
 };

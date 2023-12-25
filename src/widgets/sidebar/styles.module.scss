@@ -3,11 +3,8 @@
 	min-height: 100%;
 	background-color: var(--base--color--white);
 	border-radius: var(--base--border-radius-3);
-	display: flex;
-	align-items: stretch;
-	justify-content: flex-start;
-	flex-wrap: wrap;
-	flex-direction: column;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 	gap: var(--base--spaces--10);
 	padding: var(--base--spaces--8) 0;
 	transition: all 0.3s ease-in-out;
@@ -15,4 +12,12 @@
 
 .burgerIcon {
 	padding: 0 var(--base--spaces--5);
+}
+
+.logoutButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	flex-direction: row;
 }

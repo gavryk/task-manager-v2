@@ -1,11 +1,14 @@
 .root {
 	background-color: var(--base--color--white);
-	min-height: 275px;
+	height: 275px;
 	border-radius: var(--base--border-radius-3);
+	overflow: hidden;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 }
 
 .userCardTop {
-	padding: var(--base--spaces--4) var(--base--spaces--3);
+	padding: var(--base--spaces--3) var(--base--spaces--3);
 	border-bottom: 1px solid var(--base--color--light-grey-2);
 	.name {
 		span {
@@ -15,8 +18,37 @@
 }
 
 .userTasks {
+	overflow: auto;
 	.task {
 		padding: var(--base--spaces--2);
 		border-bottom: 1px solid var(--base--color--light-grey-2);
+		.taskTitle {
+			span {
+				font-size: var(--base--font--size);
+				display: block;
+				margin-bottom: var(--base--spaces--1);
+			}
+		}
+		.taskText {
+			color: var(--base--color--darkgrey);
+			font-size: var(--base--font--size);
+		}
+	}
+}
+
+.userCardBottom {
+	min-height: 40px;
+	border-top: 1px solid var(--base--color--light-grey-2);
+	padding: var(--base--spaces--1) var(--base--spaces--2);
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	flex-direction: row;
+	.userCardToggle {
+		background-color: transparent;
+		border: none;
+		outline: none;
+		cursor: pointer;
 	}
 }

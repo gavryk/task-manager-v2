@@ -1,7 +1,10 @@
 .root {
 	position: relative;
-	display: grid;
-	grid-template-columns: repeat(1, 1fr);
+	display: flex;
+	align-items: stretch;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	flex-direction: column;
 	gap: 5px;
 	.navItem {
 		a {
