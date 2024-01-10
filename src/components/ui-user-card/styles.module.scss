@@ -22,16 +22,37 @@
 	.task {
 		padding: var(--base--spaces--2);
 		border-bottom: 1px solid var(--base--color--light-grey-2);
-		.taskTitle {
-			span {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 15px;
+		.left {
+			.taskTitle {
+				span {
+					font-size: var(--base--font--size);
+					display: block;
+					margin-bottom: var(--base--spaces--1);
+				}
+			}
+			.taskText {
+				color: var(--base--color--darkgrey);
 				font-size: var(--base--font--size);
-				display: block;
-				margin-bottom: var(--base--spaces--1);
 			}
 		}
-		.taskText {
-			color: var(--base--color--darkgrey);
-			font-size: var(--base--font--size);
+		.right {
+			button {
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.3s ease-in-out;
+			}
+		}
+		&:hover {
+			.right {
+				button {
+					opacity: 1;
+					visibility: visible;
+				}
+			}
 		}
 	}
 }
@@ -45,10 +66,11 @@
 	justify-content: flex-end;
 	flex-wrap: wrap;
 	flex-direction: row;
-	.userCardToggle {
-		background-color: transparent;
-		border: none;
-		outline: none;
-		cursor: pointer;
-	}
+}
+
+.userTaskToggle {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
 }

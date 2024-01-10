@@ -19,17 +19,26 @@ export const UIUserCard: React.FC<{ user: IUserType }> = ({ user }) => {
 				{user.tasks.length > 0 &&
 					user.tasks.map((task) => (
 						<div className={styles.task} key={task.id}>
-							<div className={styles.taskTitle}>
-								<span>{task.title}</span>
+							<div className={styles.left}>
+								<div className={styles.taskTitle}>
+									<span>{task.title}</span>
+								</div>
+								<div className={styles.taskText}>{task.description}</div>
 							</div>
-							<div className={styles.taskText}>{task.description}</div>
+							<div className={styles.right}>
+								{admin?.role === 'ADMIN' && (
+									<button className={styles.userTaskToggle}>
+										<UIIcon name={'FaMinus'} library="fa" size={15} color="red" />
+									</button>
+								)}
+							</div>
 						</div>
 					))}
 			</div>
 			<div className={styles.userCardBottom}>
 				{admin?.role === 'ADMIN' && (
-					<button className={styles.userCardToggle}>
-						<UIIcon name={'FaPlus'} library="fa" size={18} />
+					<button className={styles.userTaskToggle}>
+						<UIIcon name={'FaPlus'} library="fa" size={16} />
 					</button>
 				)}
 			</div>
