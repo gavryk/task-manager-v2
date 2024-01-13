@@ -40,6 +40,12 @@
 			}
 		}
 		.right {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			flex-direction: row;
+			gap: var(--base--spaces--2);
 			button {
 				opacity: 0;
 				visibility: hidden;

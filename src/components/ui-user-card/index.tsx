@@ -5,7 +5,12 @@ import { UIIcon } from '..';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 
-export const UIUserCard: React.FC<{ user: IUserType }> = ({ user }) => {
+interface UserCardTypes {
+	user: IUserType;
+	removeTaskFunc: (id: string) => void;
+}
+
+export const UIUserCard: React.FC<UserCardTypes> = ({ user, removeTaskFunc }) => {
 	const admin = useSelector((state: RootState) => state.auth.user);
 
 	return (
@@ -27,9 +32,17 @@ export const UIUserCard: React.FC<{ user: IUserType }> = ({ user }) => {
 							</div>
 							<div className={styles.right}>
 								{admin?.role === 'ADMIN' && (
-									<button className={styles.userTaskToggle}>
-										<UIIcon name={'FaMinus'} library="fa" size={15} color="red" />
-									</button>
+									<>
+										<button className={styles.userTaskToggle}>
+											<UIIcon name={'FaPen'} library="fa" size={12} color="#208d88" />
+										</button>
+										<button
+											className={styles.userTaskToggle}
+											onClick={() => removeTaskFunc(task.id)}
+										>
+											<UIIcon name={'FaTrash'} library="fa" size={13} color="#af1414" />
+										</button>
+									</>
 								)}
 							</div>
 						</div>
