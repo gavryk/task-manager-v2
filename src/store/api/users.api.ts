@@ -5,7 +5,7 @@ export const userApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getUsers: builder.query<IUserType[], void>({
 			query: () => `/users`,
-			providesTags: ['Users'],
+			providesTags: ['Auth', 'Users'],
 		}),
 	}),
 });

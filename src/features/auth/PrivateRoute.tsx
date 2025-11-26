@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAppDispatch } from '@/store/store';
+import { RootState, useAppDispatch } from '@/store/store';
 import { useGetAuthUserQuery } from '@/store/api/auth.api';
 import { setAuth } from '@/store/slices/auth/slice';
 import { UILoader } from '@/components';
+import { useSelector } from 'react-redux';
 
 export const PrivateRoute: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const location = useLocation();
+	const authUser = useSelector((state: RootState) => state.auth.user);
 	const { isLoading: authLoading, data: authData } = useGetAuthUserQuery();
 
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import { useResetPassordMutation } from '@/store/api/auth.api';
+import { useResetPasswordMutation } from '@/store/api/auth.api';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { IResetPassTypes } from '@/common';
 export const ResetForm: React.FC = () => {
 	const navigate = useNavigate();
 	const [errorReq, setErrorReq] = useState<string | null>(null);
-	const [resetPassword, { isLoading: resetLoading }] = useResetPassordMutation();
+	const [resetPassword, { isLoading: resetLoading }] = useResetPasswordMutation();
 
 	const {
 		register,
