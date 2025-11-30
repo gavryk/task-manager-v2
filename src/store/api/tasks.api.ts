@@ -9,7 +9,15 @@ export const tasksApi = api.injectEndpoints({
 			}),
 			invalidatesTags: () => ['Users'],
 		}),
+		addTask: builder.mutation({
+			query: (body) => ({
+				url: '/tasks',
+				method: 'POST',
+				body,
+			}),
+			invalidatesTags: () => ['Users'],
+		}),
 	}),
 });
 
-export const { useDeleteTaskMutation } = tasksApi;
+export const { useDeleteTaskMutation, useAddTaskMutation } = tasksApi;

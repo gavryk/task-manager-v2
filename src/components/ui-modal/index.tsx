@@ -25,5 +25,31 @@ export const UIModal: React.FC<TaskModalProps> = ({ open, task, onClose, onSubmi
 
 	if (!open) return null;
 
-	return <div>UIModal</div>;
+	return (
+		<div className={styles.backdrop} onClick={onClose}>
+			<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+				<div className={styles.header}>
+					<h3>{task ? 'Edit task' : 'Create task'}</h3>
+				</div>
+				<form className={styles.body}>
+					<label className={styles.field}>
+						<span>Title</span>
+						<input value={title} onChange={(e) => setTitle(e.target.value)} required />
+					</label>
+					<label className={styles.field}>
+						<span>Description</span>
+						<textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+					</label>
+					<div className={styles.footer}>
+						<button type="button" onClick={onClose}>
+							Cancel
+						</button>
+						<button type="submit" disabled={!title.trim()}>
+							Save
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	);
 };

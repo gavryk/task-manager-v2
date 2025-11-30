@@ -1,11 +1,16 @@
-import { UIGrid, UILoader, UIUserCard } from '@/components';
-import { useDeleteTaskMutation } from '@/store/api/tasks.api';
+import { IUserType, ITaskTypes } from '@/common';
+import { UIGrid, UILoader, UIModal, UIUserCard } from '@/components';
+import { useDeleteTaskMutation, useAddTaskMutation } from '@/store/api/tasks.api';
 import { useGetUsersQuery } from '@/store/api/users.api';
-import React from 'react';
+import React, { useState } from 'react';
 
 export const Home: React.FC = () => {
 	const { data: userData, isLoading: userLoading } = useGetUsersQuery();
 	const [deleteTask, { isLoading: removeTaskLoading }] = useDeleteTaskMutation();
+	const [addTask, { isLoading: creatingTask }] = useAddTaskMutation();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedUser, setSelectedUser] = useState<IUserType | null>(null);
+	const [selectedTask, setSelectedTask] = useState<ITaskTypes | null>(null);
 
 	const removeTask = async (id: string) => {
 		try {
@@ -15,13 +20,47 @@ export const Home: React.FC = () => {
 		}
 	};
 
+	const handleAddTask = (user: IUserType) => {
+		setSelectedUser(user);
+		setIsModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+		setSelectedTask(null);
+		setSelectedUser(null);
+	};
+
+	const handleSubmitTask = async (data: { title: string; description: string }) => {
+		if (!selectedUser) return;
+
+		try {
+			console.log(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	if (userLoading) return <UILoader />;
 
 	return (
-		<UIGrid columns={4} gridGap={5}>
-			{userData?.map((user) => (
-				<UIUserCard user={user} key={user.id} removeTaskFunc={removeTask} />
-			))}
-		</UIGrid>
+		<>
+			<UIGrid columns={4} gridGap={5}>
+				{userData?.map((user) => (
+					<UIUserCard
+						user={user}
+						key={user.id}
+						removeTaskFunc={removeTask}
+						onAddTask={() => handleAddTask(user)}
+					/>
+				))}
+			</UIGrid>
+			<UIModal
+				open={isModalOpen}
+				task={selectedTask}
+				onClose={handleCloseModal}
+				onSubmit={handleSubmitTask}
+			/>
+		</>
 	);
 };

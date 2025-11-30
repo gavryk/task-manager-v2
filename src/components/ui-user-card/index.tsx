@@ -8,9 +8,10 @@ import { RootState } from '@/store/store';
 interface UserCardTypes {
 	user: IUserType;
 	removeTaskFunc: (id: string) => void;
+	onAddTask: () => void;
 }
 
-export const UIUserCard: React.FC<UserCardTypes> = ({ user, removeTaskFunc }) => {
+export const UIUserCard: React.FC<UserCardTypes> = ({ user, removeTaskFunc, onAddTask }) => {
 	const admin = useSelector((state: RootState) => state.auth.user);
 
 	return (
@@ -50,7 +51,7 @@ export const UIUserCard: React.FC<UserCardTypes> = ({ user, removeTaskFunc }) =>
 			</div>
 			<div className={styles.userCardBottom}>
 				{admin?.role === 'ADMIN' && (
-					<button className={styles.userTaskToggle}>
+					<button className={styles.userTaskToggle} onClick={onAddTask}>
 						<UIIcon name={'FaPlus'} library="fa" size={16} />
 					</button>
 				)}
