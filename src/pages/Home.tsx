@@ -35,7 +35,18 @@ export const Home: React.FC = () => {
 		if (!selectedUser) return;
 
 		try {
-			console.log(data);
+			if (selectedTask) {
+				console.warn('updateTask is not yet implemented');
+			} else {
+				await addTask({
+					userId: selectedUser.id,
+					title: data.title,
+					description: data.description,
+					status: 'NEW',
+				}).unwrap();
+			}
+
+			handleCloseModal();
 		} catch (error) {
 			console.log(error);
 		}
