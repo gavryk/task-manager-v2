@@ -35,7 +35,10 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 								<div className={styles.taskTitle}>
 									<span>{task.title}</span>
 								</div>
-								<div className={styles.taskText}>{task.description}</div>
+								<div
+									className={styles.taskText}
+									dangerouslySetInnerHTML={{ __html: task.description }}
+								></div>
 							</div>
 							<div className={styles.right}>
 								{admin?.role === 'ADMIN' && (

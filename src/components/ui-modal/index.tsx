@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { UIEditor } from '@/components';
 import styles from './styles.module.scss';
 import { ITaskTypes } from '@/common';
 
@@ -43,7 +44,7 @@ export const UIModal: React.FC<TaskModalProps> = ({ open, task, onClose, onSubmi
 					</label>
 					<label className={styles.field}>
 						<span>Description</span>
-						<textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+						<UIEditor value={description} onChange={setDescription} />
 					</label>
 					<div className={styles.footer}>
 						<button type="button" onClick={onClose}>

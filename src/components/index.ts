@@ -9,3 +9,4 @@ export * from './ui-switcher';
 export * from './ui-burger';
 export * from './ui-user-card';
 export * from './ui-modal';
+export * from './ui-editor';

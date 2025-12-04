@@ -37,6 +37,13 @@
 			.taskText {
 				color: var(--base--color--darkgrey);
 				font-size: var(--base--font--size);
+				p {
+					font-size: var(--base--font--size);
+				}
+				a {
+					color: var(--base--color--main-2);
+					text-decoration: underline;
+				}
 			}
 		}
 		.right {
