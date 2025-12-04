@@ -9,9 +9,15 @@ interface UserCardTypes {
 	user: IUserType;
 	removeTaskFunc: (id: string) => void;
 	onAddTask: () => void;
+	onEditTask: (task: IUserType['tasks'][number]) => void;
 }
 
-export const UIUserCard: React.FC<UserCardTypes> = ({ user, removeTaskFunc, onAddTask }) => {
+export const UIUserCard: React.FC<UserCardTypes> = ({
+	user,
+	removeTaskFunc,
+	onAddTask,
+	onEditTask,
+}) => {
 	const admin = useSelector((state: RootState) => state.auth.user);
 
 	return (
@@ -34,7 +40,7 @@ export const UIUserCard: React.FC<UserCardTypes> = ({ user, removeTaskFunc, onAd
 							<div className={styles.right}>
 								{admin?.role === 'ADMIN' && (
 									<>
-										<button className={styles.userTaskToggle}>
+										<button className={styles.userTaskToggle} onClick={() => onEditTask(task)}>
 											<UIIcon name={'FaPen'} library="fa" size={12} color="#208d88" />
 										</button>
 										<button

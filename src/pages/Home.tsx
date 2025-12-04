@@ -1,6 +1,10 @@
 import { IUserType, ITaskTypes } from '@/common';
 import { UIGrid, UILoader, UIModal, UIUserCard } from '@/components';
-import { useDeleteTaskMutation, useAddTaskMutation } from '@/store/api/tasks.api';
+import {
+	useDeleteTaskMutation,
+	useAddTaskMutation,
+	useUpdateTaskMutation,
+} from '@/store/api/tasks.api';
 import { useGetUsersQuery } from '@/store/api/users.api';
 import React, { useState } from 'react';
 
@@ -8,6 +12,7 @@ export const Home: React.FC = () => {
 	const { data: userData, isLoading: userLoading } = useGetUsersQuery();
 	const [deleteTask, { isLoading: removeTaskLoading }] = useDeleteTaskMutation();
 	const [addTask, { isLoading: creatingTask }] = useAddTaskMutation();
+	const [updateTask, { isLoading: updatingTask }] = useUpdateTaskMutation();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState<IUserType | null>(null);
 	const [selectedTask, setSelectedTask] = useState<ITaskTypes | null>(null);
@@ -25,6 +30,12 @@ export const Home: React.FC = () => {
 		setIsModalOpen(true);
 	};
 
+	const handleEditTask = (user: IUserType, task: IUserType['tasks'][number]) => {
+		setSelectedUser(user);
+		setSelectedTask(task);
+		setIsModalOpen(true);
+	};
+
 	const handleCloseModal = () => {
 		setIsModalOpen(false);
 		setSelectedTask(null);
@@ -36,7 +47,14 @@ export const Home: React.FC = () => {
 
 		try {
 			if (selectedTask) {
-				console.warn('updateTask is not yet implemented');
+				await updateTask({
+					id: selectedTask.id,
+					data: {
+						title: data.title,
+						description: data.description,
+						status: selectedTask.status,
+					},
+				}).unwrap();
 			} else {
 				await addTask({
 					userId: selectedUser.id,
@@ -62,6 +80,7 @@ export const Home: React.FC = () => {
 						user={user}
 						key={user.id}
 						removeTaskFunc={removeTask}
+						onEditTask={(task) => handleEditTask(user, task)}
 						onAddTask={() => handleAddTask(user)}
 					/>
 				))}
