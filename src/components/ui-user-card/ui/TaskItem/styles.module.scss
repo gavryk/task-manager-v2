@@ -1,0 +1,56 @@
+.task {
+	padding: var(--base--spaces--2);
+	border-bottom: 1px solid var(--base--color--light-grey-2);
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 15px;
+	.left {
+		.taskTitle {
+			span {
+				font-size: var(--base--font--size);
+				display: block;
+				margin-bottom: var(--base--spaces--1);
+			}
+		}
+		.taskText {
+			color: var(--base--color--darkgrey);
+			font-size: var(--base--font--size);
+			p {
+				font-size: var(--base--font--size);
+			}
+			a {
+				color: var(--base--color--main-2);
+				text-decoration: underline;
+			}
+		}
+	}
+	.right {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+		flex-direction: row;
+		gap: var(--base--spaces--2);
+		button {
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease-in-out;
+		}
+	}
+	&:hover {
+		.right {
+			button {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+}
+
+.userTaskToggle {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}

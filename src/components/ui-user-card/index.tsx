@@ -4,6 +4,7 @@ import { IUserType } from '@/common';
 import { UIIcon } from '..';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { TaskItem } from './ui/TaskItem/TaskItem';
 
 interface UserCardTypes {
 	user: IUserType;
@@ -19,6 +20,7 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 	onEditTask,
 }) => {
 	const admin = useSelector((state: RootState) => state.auth.user);
+	const isAdmin = admin?.role === 'ADMIN';
 
 	return (
 		<div className={styles.root}>
@@ -30,32 +32,13 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 			<div className={styles.userTasks}>
 				{user.tasks.length > 0 &&
 					user.tasks.map((task) => (
-						<div className={styles.task} key={task.id}>
-							<div className={styles.left}>
-								<div className={styles.taskTitle}>
-									<span>{task.title}</span>
-								</div>
-								<div
-									className={styles.taskText}
-									dangerouslySetInnerHTML={{ __html: task.description }}
-								></div>
-							</div>
-							<div className={styles.right}>
-								{admin?.role === 'ADMIN' && (
-									<>
-										<button className={styles.userTaskToggle} onClick={() => onEditTask(task)}>
-											<UIIcon name={'FaPen'} library="fa" size={12} color="#208d88" />
-										</button>
-										<button
-											className={styles.userTaskToggle}
-											onClick={() => removeTaskFunc(task.id)}
-										>
-											<UIIcon name={'FaTrash'} library="fa" size={13} color="#af1414" />
-										</button>
-									</>
-								)}
-							</div>
-						</div>
+						<TaskItem
+							key={task.id}
+							task={task}
+							isAdmin={isAdmin}
+							onEdit={() => onEditTask(task)}
+							onDelete={() => removeTaskFunc(task.id)}
+						/>
 					))}
 			</div>
 			<div className={styles.userCardBottom}>
