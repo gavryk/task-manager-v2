@@ -19,8 +19,10 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 	onAddTask,
 	onEditTask,
 }) => {
-	const admin = useSelector((state: RootState) => state.auth.user);
-	const isAdmin = admin?.role === 'ADMIN';
+	const me = useSelector((state: RootState) => state.auth.user);
+	const isAdmin = me?.role === 'ADMIN';
+	const isOwner = me?.id === user.id;
+	const canManage = isAdmin || isOwner;
 
 	return (
 		<div className={styles.root}>
@@ -36,13 +38,14 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 							key={task.id}
 							task={task}
 							isAdmin={isAdmin}
+							canManage={canManage}
 							onEdit={() => onEditTask(task)}
 							onDelete={() => removeTaskFunc(task.id)}
 						/>
 					))}
 			</div>
 			<div className={styles.userCardBottom}>
-				{admin?.role === 'ADMIN' && (
+				{me?.role === 'ADMIN' && (
 					<button className={styles.userTaskToggle} onClick={onAddTask}>
 						<UIIcon name={'FaPlus'} library="fa" size={16} />
 					</button>

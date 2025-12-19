@@ -6,11 +6,12 @@ import { UIIcon } from '@/components/ui-icon';
 interface Props {
 	task: IUserType['tasks'][number];
 	isAdmin: boolean;
+	canManage: boolean;
 	onEdit: () => void;
 	onDelete: () => void;
 }
 
-export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete }) => {
+export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, canManage }) => {
 	return (
 		<div className={styles.task}>
 			<div className={styles.left}>
@@ -31,6 +32,7 @@ export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete }) =
 						</button>
 					</>
 				)}
+				{canManage && <UIIcon name="FiSettings" library="fi" size={13} />}
 			</div>
 		</div>
 	);
