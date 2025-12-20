@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import { IUserType } from '@/common';
 import { UIIcon } from '@/components/ui-icon';
+import clsx from 'clsx';
 
 interface Props {
 	task: IUserType['tasks'][number];
@@ -12,6 +13,12 @@ interface Props {
 }
 
 export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, canManage }) => {
+	const [isActionsOpen, setIsActionsOpen] = useState(false);
+
+	const handlerOpenActions = (val: boolean) => {
+		setIsActionsOpen(val);
+	};
+
 	return (
 		<div className={styles.task}>
 			<div className={styles.left}>
@@ -23,16 +30,29 @@ export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, can
 
 			<div className={styles.right}>
 				{isAdmin && (
-					<>
+					<div className={clsx(styles.taskActions, { [styles.active]: isActionsOpen })}>
+						<button className={styles.userTaskToggle}>
+							<UIIcon name="FiCheck" size={20} color="#208d88" />
+						</button>
+						<button className={styles.userTaskToggle}>
+							<UIIcon name="FiFastForward" size={20} color="#208d88" />
+						</button>
 						<button className={styles.userTaskToggle} onClick={onEdit}>
-							<UIIcon name="FaPen" library="fa" size={12} color="#208d88" />
+							<UIIcon name="FaPen" library="fa" size={15} color="#208d88" />
 						</button>
 						<button className={styles.userTaskToggle} onClick={onDelete}>
-							<UIIcon name="FaTrash" library="fa" size={13} color="#af1414" />
+							<UIIcon name="FaTrash" library="fa" size={15} color="#af1414" />
 						</button>
-					</>
+					</div>
 				)}
-				{canManage && <UIIcon name="FiSettings" library="fi" size={13} />}
+				{canManage && (
+					<button
+						className={styles.userTaskToggle}
+						onClick={() => handlerOpenActions(!isActionsOpen)}
+					>
+						<UIIcon name="FiSettings" library="fi" size={13} />
+					</button>
+				)}
 			</div>
 		</div>
 	);
