@@ -37,15 +37,7 @@ export const UIButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				ref={ref}
 				type={type}
 				onClick={onClick}
-				className={clsx(styles.uibutton, styles[variants], styles[size], {
-					[styles.black]: color === 'black',
-					[styles.red]: color === 'red',
-					[styles.green]: color === 'green',
-					[styles.orange]: color === 'orange',
-					[styles.bordo]: color === 'bordo',
-					[styles.purple]: color === 'purple',
-					[styles.blue]: color === 'blue',
-					[styles.main]: color === 'main',
+				className={clsx(styles.uibutton, styles[variants], styles[size], styles[color], {
 					[styles.active]: active,
 					[styles.fluid]: fluid,
 					[styles.centered]: centered,
