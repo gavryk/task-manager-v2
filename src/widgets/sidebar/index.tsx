@@ -8,6 +8,7 @@ import { useLogoutMutation } from '@/store/api/auth.api';
 import { setLogout } from '@/store/slices/auth/slice';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/store/api/api';
+import clsx from 'clsx';
 
 export const Sidebar: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -41,11 +42,13 @@ export const Sidebar: React.FC = () => {
 				<UIBurger mobileMenuActive={sidebarStatus} handlerClick={handlerClick} />
 			</div>
 			<div className={styles.main}>
-				{sidebarStatus && <AuthPanel user={user} />}
 				<Navigation links={links} minimal={!sidebarStatus} />
 			</div>
-			<div className={styles.logoutButton} onClick={logOut}>
-				<UIIcon name="FiLogIn" size={24} />
+			<div className={clsx(styles.bottom, { [styles.expanded]: sidebarStatus })}>
+				{sidebarStatus && <AuthPanel user={user} />}
+				<div className={styles.logoutButton} onClick={logOut}>
+					<UIIcon name="FiLogIn" size={24} />
+				</div>
 			</div>
 		</div>
 	);

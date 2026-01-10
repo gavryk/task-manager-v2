@@ -1,15 +1,21 @@
 .root {
-	padding: var(--base--spaces--4) var(--base--spaces--10);
+	padding: 0;
 	text-align: center;
 	transition: all 0.3s ease-in-out;
+	display: grid;
+	grid-template-columns: 50px 1fr;
+	grid-template-rows: repeat(2, auto);
+	align-items: center;
+	gap: 0 5px;
 	.userAvatar {
 		display: block;
-		max-width: 160px;
+		aspect-ratio: 1;
 		margin: 0 auto;
 		border-radius: var(--base--border-radius-circle);
 		overflow: hidden;
 		aspect-ratio: 1;
-		margin-bottom: var(--base--spaces--2);
+		grid-row-start: 1;
+		grid-row-end: -1;
 		img {
 			width: 100%;
 			height: 100%;
@@ -17,9 +23,11 @@
 		}
 	}
 	.userName {
+		text-align: left;
 		span {
 			font-weight: 700;
-			font-size: var(--base--font--size-lg);
+			line-height: 1;
+			font-size: var(--base--font--size);
 		}
 	}
 }

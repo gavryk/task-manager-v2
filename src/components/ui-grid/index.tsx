@@ -32,7 +32,7 @@ export const UIGrid = ({
 			[styles.flxCenter]: alignItem === 'center',
 			[styles.fullHeight]: fullHeight === true,
 		});
-	}, [columns, gridGap]);
+	}, [columns, gridGap, centerBig, alignItem, fullHeight]);
 
 	return <div className={gridWrapperClasses}>{children}</div>;
 };

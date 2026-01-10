@@ -65,7 +65,7 @@ body {
 }
 
 .container-xl {
-	@include container('1920px');
+	@include container('1980px');
 	&.space {
 		padding: 20px 0;
 	}
