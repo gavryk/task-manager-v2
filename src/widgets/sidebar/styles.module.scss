@@ -25,6 +25,7 @@
 	&.expanded {
 		justify-content: space-between;
 		padding: 0 var(--base--spaces--4);
+		min-width: 250px;
 	}
 }
 

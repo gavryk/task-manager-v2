@@ -8,11 +8,11 @@
 	gap: 5px;
 	.navItem {
 		a {
+			width: 100%;
 			background-color: var(--base--color--lighgrey);
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			gap: 15px;
+			justify-content: flex-start;
 			padding: var(--base--spaces--3) var(--base--spaces--4);
 			text-align: center;
 			transition: all 0.2s ease-in-out;
@@ -20,6 +20,15 @@
 			&:hover {
 				color: var(--base--color--white);
 				background-color: var(--base--color--main);
+				span {
+					color: var(--base--color--white);
+				}
+			}
+			&.minimal {
+				justify-content: center;
+			}
+			span {
+				padding: 0 var(--base--spaces--3);
 			}
 		}
 	}

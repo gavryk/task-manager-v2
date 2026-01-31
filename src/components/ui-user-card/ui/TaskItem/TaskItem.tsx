@@ -35,13 +35,19 @@ export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, can
 							<UIIcon name="FiCheck" size={20} color="#208d88" />
 						</button>
 						<button className={styles.userTaskToggle}>
-							<UIIcon name="FiFastForward" size={20} color="#208d88" />
+							<UIIcon name="FiFastForward" size={20} color="#d3c71f" />
 						</button>
 						<button className={styles.userTaskToggle} onClick={onEdit}>
 							<UIIcon name="FaPen" library="fa" size={15} color="#208d88" />
 						</button>
 						<button className={styles.userTaskToggle} onClick={onDelete}>
 							<UIIcon name="FaTrash" library="fa" size={15} color="#af1414" />
+						</button>
+						<button
+							className={clsx(styles.userTaskToggle, styles.closeActions)}
+							onClick={() => handlerOpenActions(!isActionsOpen)}
+						>
+							<UIIcon name="IoClose" library="io5" size={22} color="#222" />
 						</button>
 					</div>
 				)}

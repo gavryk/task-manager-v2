@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { NavLink } from 'react-router-dom';
 import { UIIcon } from '@/components';
-import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
 interface NavigateTypes {
 	links: INavigateItem[];
@@ -15,9 +15,14 @@ export const Navigation: React.FC<NavigateTypes> = ({ links, minimal }) => {
 		<div className={styles.root}>
 			{links.map((item: INavigateItem) => (
 				<div className={styles.navItem} key={item.title}>
-					<NavLink to={item.link} className={({ isActive }) => (isActive ? styles.active : '')}>
+					<NavLink
+						to={item.link}
+						className={({ isActive }) =>
+							clsx({ [styles.active]: isActive, [styles.minimal]: minimal })
+						}
+					>
 						<UIIcon name={item.icon} size={24} />
-						{!minimal && item.title}
+						{!minimal && <span>{item.title}</span>}
 					</NavLink>
 				</div>
 			))}
