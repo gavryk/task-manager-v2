@@ -10,3 +10,4 @@ export * from './ui-burger';
 export * from './ui-user-card';
 export * from './ui-modal';
 export * from './ui-editor';
+export * from './ui-task-card';

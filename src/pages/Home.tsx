@@ -1,5 +1,5 @@
 import { IUserType, ITaskTypes } from '@/common';
-import { UIButton, UIGrid, UILoader, UIModal, UIUserCard } from '@/components';
+import { UIGrid, UILoader, UIModal, UIUserCard } from '@/components';
 import {
 	useDeleteTaskMutation,
 	useAddTaskMutation,

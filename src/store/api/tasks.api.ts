@@ -25,7 +25,29 @@ export const tasksApi = api.injectEndpoints({
 			}),
 			invalidatesTags: () => ['Users'],
 		}),
+		updateTaskStatus: builder.mutation({
+			query: ({ id, status }) => ({
+				url: `/tasks/${id}/status`,
+				method: 'PATCH',
+				body: { status },
+			}),
+			invalidatesTags: () => ['Users', 'Tasks'],
+		}),
+		getTasksByStatus: builder.query({
+			query: (status) => ({
+				url: '/tasks/filter',
+				method: 'GET',
+				params: { status },
+			}),
+			providesTags: () => ['Tasks'],
+		}),
 	}),
 });
 
-export const { useDeleteTaskMutation, useAddTaskMutation, useUpdateTaskMutation } = tasksApi;
+export const {
+	useDeleteTaskMutation,
+	useAddTaskMutation,
+	useUpdateTaskMutation,
+	useUpdateTaskStatusMutation,
+	useGetTasksByStatusQuery,
+} = tasksApi;

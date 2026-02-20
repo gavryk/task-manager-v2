@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import { IUserType } from '@/common';
 import { UIIcon } from '@/components/ui-icon';
 import clsx from 'clsx';
+import { useUpdateTaskStatusMutation } from '@/store/api/tasks.api';
 
 interface Props {
 	task: IUserType['tasks'][number];
@@ -14,13 +15,26 @@ interface Props {
 
 export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, canManage }) => {
 	const [isActionsOpen, setIsActionsOpen] = useState(false);
+	const [updateStatus, { isLoading }] = useUpdateTaskStatusMutation();
+
+	const handleMarkDone = async () => {
+		try {
+			await updateStatus({
+				id: task.id,
+				status: 'DONE',
+			}).unwrap();
+			setIsActionsOpen(!isActionsOpen);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	const handlerOpenActions = (val: boolean) => {
 		setIsActionsOpen(val);
 	};
 
 	return (
-		<div className={styles.task}>
+		<div className={clsx(styles.task, { [styles.done]: task.status === 'DONE' })}>
 			<div className={styles.left}>
 				<div className={styles.taskTitle}>
 					<span>{task.title}</span>
@@ -31,7 +45,11 @@ export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, can
 			<div className={styles.right}>
 				{isAdmin && (
 					<div className={clsx(styles.taskActions, { [styles.active]: isActionsOpen })}>
-						<button className={styles.userTaskToggle}>
+						<button
+							className={styles.userTaskToggle}
+							onClick={handleMarkDone}
+							disabled={isLoading || task.status === 'DONE'}
+						>
 							<UIIcon name="FiCheck" size={20} color="#208d88" />
 						</button>
 						<button className={styles.userTaskToggle}>

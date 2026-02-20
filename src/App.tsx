@@ -8,6 +8,8 @@ import { Register } from './pages/Register';
 import { Reset } from './pages/Reset';
 import { RootState } from './store/store';
 import { useSelector } from 'react-redux';
+import { Settings } from './pages/Settings';
+import { Complete } from './pages/Complete';
 
 const App: React.FC = () => {
 	const location = useLocation();
@@ -26,6 +28,8 @@ const App: React.FC = () => {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/password-reset" element={<Reset />} />
+				<Route path="/settings" element={<Settings />} />
+				<Route path="/complete" element={<Complete />} />
 			</Route>
 		</Routes>
 	);
