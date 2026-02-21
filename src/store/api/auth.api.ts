@@ -4,7 +4,10 @@ import { api } from './api';
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getAuthUser: builder.query<IAuthTypes, void>({
-			query: () => `/users/profile/me`,
+			query: () => ({
+				url: `/users/profile/me`,
+				credentials: 'include',
+			}),
 			providesTags: ['Auth'],
 		}),
 		loginUser: builder.mutation({

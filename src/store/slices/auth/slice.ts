@@ -1,4 +1,5 @@
 import { IAuthSliceTypes } from '@/common';
+import { authApi } from '@/store/api/auth.api';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: IAuthSliceTypes = {
@@ -15,6 +16,15 @@ export const authSlice = createSlice({
 		setLogout: (state) => {
 			state.user = null;
 		},
+	},
+	extraReducers: (builder) => {
+		builder.addMatcher(authApi.endpoints.getAuthUser.matchFulfilled, (state, { payload }) => {
+			state.user = payload;
+		});
+
+		builder.addMatcher(authApi.endpoints.getAuthUser.matchRejected, (state) => {
+			state.user = null;
+		});
 	},
 });
 

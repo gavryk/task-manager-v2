@@ -47,7 +47,7 @@ export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, can
 			</div>
 
 			<div className={styles.right}>
-				{isAdmin && (
+				{canManage && (
 					<div className={clsx(styles.taskActions, { [styles.active]: isActionsOpen })}>
 						<button
 							className={styles.userTaskToggle}

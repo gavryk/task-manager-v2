@@ -10,9 +10,11 @@ import { RootState } from './store/store';
 import { useSelector } from 'react-redux';
 import { Settings } from './pages/Settings';
 import { Complete } from './pages/Complete';
+import { useGetAuthUserQuery } from './store/api/auth.api';
 
 const App: React.FC = () => {
 	const location = useLocation();
+	useGetAuthUserQuery();
 	const user = useSelector((state: RootState) => state.auth.user);
 	const isAuthPage =
 		location.pathname === '/login' ||
