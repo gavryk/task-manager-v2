@@ -23,7 +23,7 @@ export const tasksApi = api.injectEndpoints({
 				method: 'PUT',
 				body: data,
 			}),
-			invalidatesTags: () => ['Users'],
+			invalidatesTags: () => ['Users', 'Tasks'],
 		}),
 		updateTaskStatus: builder.mutation({
 			query: ({ id, status }) => ({

@@ -60,7 +60,7 @@ export const Complete: React.FC = () => {
 
 	return (
 		<>
-			<UIGrid columns={2} gridGap={5}>
+			<UIGrid columns={2} gridGap={5} alignItem="flex-start">
 				{tasks?.map((task: ITaskTypes) => (
 					<UITaskCard
 						key={task.id}

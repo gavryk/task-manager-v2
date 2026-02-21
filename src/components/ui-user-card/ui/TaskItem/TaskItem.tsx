@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { IUserType } from '@/common';
 import { UIIcon } from '@/components/ui-icon';
@@ -32,6 +32,10 @@ export const TaskItem: React.FC<Props> = ({ task, isAdmin, onEdit, onDelete, can
 	const handlerOpenActions = (val: boolean) => {
 		setIsActionsOpen(val);
 	};
+
+	useEffect(() => {
+		setIsActionsOpen(false);
+	}, [task]);
 
 	return (
 		<div className={clsx(styles.task, { [styles.done]: task.status === 'DONE' })}>

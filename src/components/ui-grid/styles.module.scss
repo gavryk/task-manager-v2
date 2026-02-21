@@ -1,7 +1,6 @@
 .gridWrapper {
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
-	align-items: flex-start;
 	grid-gap: var(--grid--gap);
 	position: relative;
 	&.flxCenter {
