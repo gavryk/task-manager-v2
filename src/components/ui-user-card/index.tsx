@@ -24,6 +24,7 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 	const isOwner = me?.id === user.id;
 	const canManage = isAdmin || isOwner;
 
+	console.log(user);
 	return (
 		<div className={styles.root}>
 			<div className={styles.userCardTop}>

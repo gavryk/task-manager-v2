@@ -4,5 +4,6 @@ export type ITaskTypes = {
 	description: string;
 	status: 'NEW' | 'IN_PROGRESS' | 'PENDING' | 'DONE';
 	userId: string;
+	order: number;
 	users?: { name: string };
 };
