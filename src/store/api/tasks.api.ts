@@ -33,6 +33,14 @@ export const tasksApi = api.injectEndpoints({
 			}),
 			invalidatesTags: () => ['Users', 'Tasks'],
 		}),
+		moveTask: builder.mutation({
+			query: ({ id, toIndex }) => ({
+				url: `/tasks/${id}/move`,
+				method: 'PATCH',
+				body: { toIndex },
+			}),
+			invalidatesTags: () => ['Users'],
+		}),
 		getTasksByStatus: builder.query({
 			query: (status) => ({
 				url: '/tasks/filter',
@@ -50,4 +58,5 @@ export const {
 	useUpdateTaskMutation,
 	useUpdateTaskStatusMutation,
 	useGetTasksByStatusQuery,
+	useMoveTaskMutation,
 } = tasksApi;

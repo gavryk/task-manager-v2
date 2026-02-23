@@ -4,6 +4,7 @@ import {
 	useDeleteTaskMutation,
 	useAddTaskMutation,
 	useUpdateTaskMutation,
+	useMoveTaskMutation,
 } from '@/store/api/tasks.api';
 import { useGetUsersQuery } from '@/store/api/users.api';
 import React, { useState } from 'react';
@@ -16,6 +17,7 @@ export const Home: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState<IUserType | null>(null);
 	const [selectedTask, setSelectedTask] = useState<ITaskTypes | null>(null);
+	const [moveTask] = useMoveTaskMutation();
 
 	const removeTask = async (id: string) => {
 		try {
@@ -40,6 +42,10 @@ export const Home: React.FC = () => {
 		setIsModalOpen(false);
 		setSelectedTask(null);
 		setSelectedUser(null);
+	};
+
+	const onMoveTask = async ({ taskId, toIndex }: { taskId: string; toIndex: number }) => {
+		await moveTask({ id: taskId, toIndex }).unwrap();
 	};
 
 	const handleSubmitTask = async (data: { title: string; description: string }) => {
@@ -82,6 +88,7 @@ export const Home: React.FC = () => {
 						removeTaskFunc={removeTask}
 						onEditTask={(task) => handleEditTask(user, task)}
 						onAddTask={() => handleAddTask(user)}
+						onMoveTask={onMoveTask}
 					/>
 				))}
 			</UIGrid>
