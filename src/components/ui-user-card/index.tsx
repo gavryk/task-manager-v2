@@ -5,15 +5,9 @@ import { UIIcon } from '..';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import { TaskItem } from './ui/TaskItem/TaskItem';
-import {
-	DndContext,
-	DragEndEvent,
-	PointerSensor,
-	useSensor,
-	useSensors,
-	closestCenter,
-} from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import { DndContext, PointerSensor, useSensor, useSensors, closestCenter } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { useUserTasksDnD } from '@/hooks';
 
 interface UserCardTypes {
 	user: IUserType;
@@ -34,46 +28,13 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 	const isAdmin = me?.role === 'ADMIN';
 	const isOwner = me?.id === user.id;
 	const canManage = isAdmin || isOwner;
-	const [tasks, setTasks] = React.useState(() => [...user.tasks].sort((a, b) => a.order - b.order));
+	const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
 
-	React.useEffect(() => {
-		setTasks([...user.tasks].sort((a, b) => a.order - b.order));
-	}, [user.tasks]);
-
-	React.useEffect(() => {
-		setTasks([...user.tasks].sort((a, b) => a.order - b.order));
-	}, [user.tasks]);
-
-	const sensors = useSensors(
-		useSensor(PointerSensor, {
-			activationConstraint: { distance: 6 },
-		}),
-	);
-
-	const taskIds = React.useMemo(() => tasks.map((t) => t.id), [tasks]);
-
-	const handleDragEnd = async (event: DragEndEvent) => {
-		if (!canManage) return;
-
-		const { active, over } = event;
-		if (!over) return;
-		if (active.id === over.id) return;
-
-		const oldIndex = taskIds.indexOf(String(active.id));
-		const newIndex = taskIds.indexOf(String(over.id));
-		if (oldIndex < 0 || newIndex < 0) return;
-
-		const prev = tasks;
-		const next = arrayMove(tasks, oldIndex, newIndex);
-		setTasks(next); // optimistic
-
-		try {
-			await onMoveTask({ taskId: String(active.id), toIndex: newIndex });
-		} catch (e) {
-			setTasks(prev); // rollback
-			console.error(e);
-		}
-	};
+	const { tasks, taskIds, handleDragEnd } = useUserTasksDnD({
+		tasksFromProps: user.tasks,
+		canManage,
+		onMoveTask,
+	});
 
 	return (
 		<div className={styles.root}>
@@ -82,6 +43,7 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 					<span>{user.name}</span>
 				</div>
 			</div>
+
 			<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
 				<SortableContext items={taskIds} strategy={verticalListSortingStrategy}>
 					<div className={styles.userTasks}>
@@ -98,8 +60,9 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 					</div>
 				</SortableContext>
 			</DndContext>
+
 			<div className={styles.userCardBottom}>
-				{me?.role === 'ADMIN' && (
+				{isAdmin && (
 					<button className={styles.userTaskToggle} onClick={onAddTask}>
 						<UIIcon name={'FaPlus'} library="fa" size={16} />
 					</button>
