@@ -1,4 +1,5 @@
 import { api } from './api';
+import { userApi } from './users.api';
 
 export const tasksApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -33,13 +34,36 @@ export const tasksApi = api.injectEndpoints({
 			}),
 			invalidatesTags: () => ['Users', 'Tasks'],
 		}),
-		moveTask: builder.mutation({
+		moveTask: builder.mutation<unknown, { id: string; toIndex: number; userId: string }>({
 			query: ({ id, toIndex }) => ({
 				url: `/tasks/${id}/move`,
 				method: 'PATCH',
 				body: { toIndex },
 			}),
-			invalidatesTags: () => ['Users'],
+
+			async onQueryStarted({ id, toIndex, userId }, { dispatch, queryFulfilled }) {
+				const patch = dispatch(
+					userApi.util.updateQueryData('getUsers', undefined, (draft) => {
+						const user = draft.find((u) => u.id === userId);
+						if (!user || !user.tasks?.length) return;
+						const fromIndex = user.tasks.findIndex((t) => t.id === id);
+						if (fromIndex === -1) return;
+
+						const [moved] = user.tasks.splice(fromIndex, 1);
+						user.tasks.splice(toIndex, 0, moved);
+
+						user.tasks.forEach((t, idx) => {
+							t.order = idx;
+						});
+					}),
+				);
+
+				try {
+					await queryFulfilled;
+				} catch {
+					patch.undo();
+				}
+			},
 		}),
 		getTasksByStatus: builder.query({
 			query: (status) => ({

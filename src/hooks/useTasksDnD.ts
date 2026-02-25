@@ -7,7 +7,8 @@ type Task = { id: string; order: number };
 type Params<T extends Task> = {
 	tasksFromProps: T[];
 	canManage: boolean;
-	onMoveTask: (params: { taskId: string; toIndex: number }) => Promise<void>;
+	userId: string;
+	onMoveTask: (params: { taskId: string; toIndex: number; userId: string }) => Promise<unknown>;
 };
 
 const sortByOrder = <T extends Task>(arr: T[]) => [...arr].sort((a, b) => a.order - b.order);
@@ -15,22 +16,23 @@ const sortByOrder = <T extends Task>(arr: T[]) => [...arr].sort((a, b) => a.orde
 export function useUserTasksDnD<T extends Task>({
 	tasksFromProps,
 	canManage,
+	userId,
 	onMoveTask,
 }: Params<T>) {
 	const [tasks, setTasks] = React.useState<T[]>(() => sortByOrder(tasksFromProps));
 	const [isSaving, setIsSaving] = React.useState(false);
 
 	React.useEffect(() => {
-		if (isSaving) return;
 		setTasks(sortByOrder(tasksFromProps));
-	}, [tasksFromProps, isSaving]);
+	}, [tasksFromProps]);
 
 	const taskIds = React.useMemo(() => tasks.map((t) => t.id), [tasks]);
-
-	const queuedMoveRef = React.useRef<null | { taskId: string; toIndex: number }>(null);
+	const queuedMoveRef = React.useRef<null | { taskId: string; toIndex: number; userId: string }>(
+		null,
+	);
 
 	const runMove = React.useCallback(
-		async (move: { taskId: string; toIndex: number }) => {
+		async (move: { taskId: string; toIndex: number; userId: string }) => {
 			setIsSaving(true);
 			try {
 				await onMoveTask(move);
@@ -61,15 +63,15 @@ export function useUserTasksDnD<T extends Task>({
 			const newIndex = taskIds.indexOf(String(over.id));
 			if (oldIndex < 0 || newIndex < 0) return;
 
-			// optimistic UI
-			setTasks((prev) => arrayMove(prev, oldIndex, newIndex));
+			setTasks((prev) => arrayMove(prev, oldIndex, newIndex)); // optimistic
 
-			const move = { taskId: String(active.id), toIndex: newIndex };
+			const move = { taskId: String(active.id), toIndex: newIndex, userId };
 
 			if (isSaving) {
 				queuedMoveRef.current = move;
 				return;
 			}
+
 			try {
 				await runMove(move);
 			} catch (e) {
@@ -78,7 +80,7 @@ export function useUserTasksDnD<T extends Task>({
 				await flushQueueIfAny();
 			}
 		},
-		[canManage, taskIds, isSaving, runMove, flushQueueIfAny],
+		[canManage, taskIds, isSaving, runMove, flushQueueIfAny, userId],
 	);
 
 	return { tasks, taskIds, handleDragEnd, isSaving };

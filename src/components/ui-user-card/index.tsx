@@ -14,7 +14,7 @@ interface UserCardTypes {
 	removeTaskFunc: (id: string) => void;
 	onAddTask: () => void;
 	onEditTask: (task: IUserType['tasks'][number]) => void;
-	onMoveTask: (params: { taskId: string; toIndex: number }) => Promise<void>;
+	onMoveTask: (params: { taskId: string; toIndex: number; userId: string }) => Promise<unknown>;
 }
 
 export const UIUserCard: React.FC<UserCardTypes> = ({
@@ -33,6 +33,7 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 	const { tasks, taskIds, handleDragEnd } = useUserTasksDnD({
 		tasksFromProps: user.tasks,
 		canManage,
+		userId: user.id,
 		onMoveTask,
 	});
 
@@ -44,7 +45,12 @@ export const UIUserCard: React.FC<UserCardTypes> = ({
 				</div>
 			</div>
 
-			<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+			<DndContext
+				autoScroll={false}
+				sensors={sensors}
+				collisionDetection={closestCenter}
+				onDragEnd={handleDragEnd}
+			>
 				<SortableContext items={taskIds} strategy={verticalListSortingStrategy}>
 					<div className={styles.userTasks}>
 						{tasks.map((task) => (

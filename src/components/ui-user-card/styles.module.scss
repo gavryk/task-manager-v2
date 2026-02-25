@@ -18,7 +18,10 @@
 }
 
 .userTasks {
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+	overscroll-behavior-x: none;
+	touch-action: pan-y;
 }
 
 .userCardBottom {

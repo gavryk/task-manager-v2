@@ -44,8 +44,16 @@ export const Home: React.FC = () => {
 		setSelectedUser(null);
 	};
 
-	const onMoveTask = async ({ taskId, toIndex }: { taskId: string; toIndex: number }) => {
-		await moveTask({ id: taskId, toIndex }).unwrap();
+	const onMoveTask = async ({
+		taskId,
+		toIndex,
+		userId,
+	}: {
+		taskId: string;
+		toIndex: number;
+		userId: string;
+	}) => {
+		await moveTask({ id: taskId, toIndex, userId }).unwrap();
 	};
 
 	const handleSubmitTask = async (data: { title: string; description: string }) => {
