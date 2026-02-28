@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import styles from './styles.module.scss';
 import { IUserType } from '@/common';
-import { UIIcon } from '@/components/ui-icon';
 import clsx from 'clsx';
-import { useUpdateTaskStatusMutation } from '@/store/api/tasks.api';
-
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { TaskContent } from './TaskContent';
+import { TaskActions } from './TaskActions';
 
 interface Props {
 	task: IUserType['tasks'][number];
@@ -18,36 +17,26 @@ interface Props {
 
 export const TaskItem: React.FC<Props> = ({ task, onEdit, onDelete, canManage }) => {
 	const [isActionsOpen, setIsActionsOpen] = useState(false);
-	const [updateStatus, { isLoading }] = useUpdateTaskStatusMutation();
 
 	const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
 		id: task.id,
 		disabled: !canManage,
 	});
 
-	const style: React.CSSProperties = {
-		transform: CSS.Transform.toString(transform),
-		transition,
-		opacity: isDragging ? 0.7 : 1,
-	};
+	const style = useMemo<React.CSSProperties>(
+		() => ({
+			transform: CSS.Transform.toString(transform),
+			transition,
+			opacity: isDragging ? 0.7 : 1,
+		}),
+		[transform, transition, isDragging],
+	);
 
-	const handleMarkDone = async (e: React.MouseEvent) => {
-		e.stopPropagation();
-		try {
-			await updateStatus({
-				id: task.id,
-				status: 'DONE',
-			}).unwrap();
-			setIsActionsOpen(false);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const toggleActions = (e: React.MouseEvent) => {
+	const closeActions = useCallback(() => setIsActionsOpen(false), []);
+	const toggleActions = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
 		setIsActionsOpen((v) => !v);
-	};
+	}, []);
 
 	useEffect(() => {
 		setIsActionsOpen(false);
@@ -57,74 +46,25 @@ export const TaskItem: React.FC<Props> = ({ task, onEdit, onDelete, canManage })
 		<div
 			ref={setNodeRef}
 			style={style}
-			className={clsx(styles.task, { [styles.done]: task.status === 'DONE' })}
+			className={clsx(styles.task, {
+				[styles.done]: task.status === 'DONE',
+				[styles.progress]: task.status === 'IN_PROGRESS',
+			})}
+			onClick={closeActions}
 			{...attributes}
 		>
-			<div
-				className={styles.left}
-				{...listeners}
-				style={{ cursor: canManage ? 'grab' : 'default' }}
-				onClick={() => setIsActionsOpen(false)}
-			>
-				<div className={styles.taskTitle}>
-					<span>{task.title}</span>
-				</div>
-				<div className={styles.taskText} dangerouslySetInnerHTML={{ __html: task.description }} />
-			</div>
+			<TaskContent task={task} canManage={canManage} listeners={listeners} />
 
-			<div className={styles.right} onPointerDown={(e) => e.stopPropagation()}>
-				{canManage && (
-					<div className={clsx(styles.taskActions, { [styles.active]: isActionsOpen })}>
-						<button
-							className={styles.userTaskToggle}
-							onClick={handleMarkDone}
-							disabled={isLoading || task.status === 'DONE'}
-							type="button"
-						>
-							<UIIcon name="FiCheck" size={20} color="#208d88" />
-						</button>
-						<button
-							className={styles.userTaskToggle}
-							onClick={(e) => e.stopPropagation()}
-							type="button"
-						>
-							<UIIcon name="FiFastForward" size={20} color="#d3c71f" />
-						</button>
-						<button
-							className={styles.userTaskToggle}
-							onClick={(e) => {
-								e.stopPropagation();
-								onEdit();
-							}}
-							type="button"
-						>
-							<UIIcon name="FaPen" library="fa" size={15} color="#208d88" />
-						</button>
-						<button
-							className={styles.userTaskToggle}
-							onClick={(e) => {
-								e.stopPropagation();
-								onDelete();
-							}}
-							type="button"
-						>
-							<UIIcon name="FaTrash" library="fa" size={15} color="#af1414" />
-						</button>
-						<button
-							className={clsx(styles.userTaskToggle, styles.closeActions)}
-							onClick={toggleActions}
-							type="button"
-						>
-							<UIIcon name="IoClose" library="io5" size={22} color="#222" />
-						</button>
-					</div>
-				)}
-				{canManage && (
-					<button className={styles.userTaskToggle} onClick={toggleActions} type="button">
-						<UIIcon name="FiSettings" library="fi" size={13} />
-					</button>
-				)}
-			</div>
+			{canManage && (
+				<TaskActions
+					task={task}
+					isOpen={isActionsOpen}
+					onToggle={toggleActions}
+					onClose={closeActions}
+					onEdit={onEdit}
+					onDelete={onDelete}
+				/>
+			)}
 		</div>
 	);
 };

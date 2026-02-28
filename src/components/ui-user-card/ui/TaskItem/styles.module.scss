@@ -12,6 +12,9 @@
 	&.done {
 		background-color: var(--base--color--green-3);
 	}
+	&.progress {
+		background-color: var(--base--color--orange-light);
+	}
 	.left {
 		min-width: 0;
 		.taskTitle {
